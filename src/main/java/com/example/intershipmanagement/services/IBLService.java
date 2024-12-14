@@ -11,6 +11,5 @@ public interface IBLService {
     void deleteBl(long idBl);
     BL updateBl(BL Bl);
 //    public List<BL> getEventsByUserOrderByParticipation(Long userId);
-/// testtt
 
 }

@@ -67,19 +67,17 @@ public class BLUserController {
         return BLUserService.AddBLUserAndAssign(BLUser, idBl);
     }
 
+///taffectii Bl el livreur sans ajout lel bl mara okhra  w baad nzidha tetbadel l etat ta3 depot depen ireclami wala ivaled w nziid date
+    @PostMapping("/AssignBlUser/{blId}/{idUser}")
+    public void AssignBlUser(@PathVariable long blId ,@PathVariable long idUser){
+        blService.AssignBlUser(blId,idUser);
+    }
+
     @PostMapping("/reserve/{idBl}")
     public String reserver(@PathVariable Long idBl, @RequestBody BLUser BLUser) {
 
         return BLUserService.reserver(idBl, BLUser);
     }
-
-   /* @GetMapping("/statistics")
-    public List<Object[]> getMonthlyBLUserCountsByYear(
-            @RequestParam("year") int year) {
-        return reservService.getMonthlyBLUserCountsByYear(year);
-    }*/
-
-
 
     @GetMapping("/pdf")
     public void exportBlPdf(HttpServletResponse response) throws IOException, DocumentException {

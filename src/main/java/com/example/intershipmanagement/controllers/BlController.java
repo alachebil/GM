@@ -49,6 +49,13 @@ public class BlController {
     }
 
 
+/// testt WORK MRIGLLL
+   @PostMapping("/addAndAssignUser/{idUser}")
+    public void addBlandassignUser(@RequestBody BL Bl ,@PathVariable long idUser){
+         blService.addBlandassignUser(Bl,idUser);
+    }
+
+
     @GetMapping("/qrcode")
     public ResponseEntity<byte[]> generateQRCode(@RequestParam("id") long id) {
         try {

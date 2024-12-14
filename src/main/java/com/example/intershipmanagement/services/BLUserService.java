@@ -22,81 +22,67 @@ import java.util.Map;
 public class BLUserService implements IBLUserService {
 
 
-
-
-
-
-    IBLUserRepository IBLUserRepository;
-    IBLRepository eventRepository;
+    IBLUserRepository blUserRepository;
+    IBLRepository blRepository;
     @Override
     public BLUser addBLUser(BLUser BLUser) {
-        return IBLUserRepository.save(BLUser);
+        return blUserRepository.save(BLUser);
     }
 
     @Override
     public List<BLUser> getAllBLUser() {
-        return IBLUserRepository.findAll();
+        return blUserRepository.findAll();
     }
 
     @Override
     public BLUser getBLUserById(long idReserv) {
-        return IBLUserRepository.findById(idReserv).get();
+        return blUserRepository.findById(idReserv).get();
     }
 
     @Override
     public void deleteBLUser(long idReserv) {
-        IBLUserRepository.deleteById(idReserv);
+        blUserRepository.deleteById(idReserv);
 
     }
 
     @Override
     public BLUser updateBLUser(BLUser BLUser) {
-        return IBLUserRepository.save(BLUser);
+        return blUserRepository.save(BLUser);
     }
 
     @Override
-    public BLUser AddBLUserAndAssign(BLUser blUserser, long IdEvent) {
-        BL BL = eventRepository.findById(IdEvent).get();
-        blUserser.setBl(BL);
+    public BLUser AddBLUserAndAssign(BLUser blUserser, long IdBl) {
+        BL Bl = blRepository.findById(IdBl).get();
+        blUserser.setBl(Bl);
 
 //// ************   Date   ******/*/-/-*/-/-/-/---*/
         // Obtenez la date actuelle
         LocalDate dateActuelle = LocalDate.now();
 // Affectez la date actuelle à la réservation
 //        blUserser.setDate_reser(dateActuelle);
-        return IBLUserRepository.save(blUserser);
+        return blUserRepository.save(blUserser);
 
     }
 
     @Override
-    public String reserver(Long IdEvent, BLUser BLUser) {
-        BL BL = eventRepository.findById(IdEvent).orElseThrow(() -> new RuntimeException("Événement non trouvé"));
+    public String reserver(Long IdBl, BLUser blUser) {
+        BL BL = blRepository.findById(IdBl).orElseThrow(() -> new RuntimeException("Événement non trouvé"));
 
 //        if (BL.getNbrPlace() > 0) {
 //            BL.setNbrPlace(BL.getNbrPlace() - 1);
 
-            eventRepository.save(BL);
+        blRepository.save(BL);
 //            if (BL.getNbrPlace() ==0){
-                /**************** lel ssmmsss ki tzid compte **********/
 //
-
-//            }
-            // Enregistrer la réservation
             return "Réservation réussie";
-//        } else {
-//            return "L'événement est complet";
-//        }
+
     }
 
-    /*@Override
-    public List<Object[]> getMonthlyBLUserCountsByYear(int year) {
-        return  reservRepository.findMonthlyBLUserCountsByYear(year);
-    }*/
     @Override
 
         public Map<String, Integer> statBLUserParEvenement() {
             Map<String, Integer> statResult = new HashMap<>();
-            List<BL> evenements = eventRepository.findAll();
+            List<BL> evenements = blRepository.findAll();
 
             for (BL evenement : evenements) {
                 // Assuming 'reservations' is properly populated in the Evenement entity

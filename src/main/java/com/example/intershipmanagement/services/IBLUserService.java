@@ -11,8 +11,8 @@ public interface IBLUserService {
     BLUser getBLUserById(long idReserv);
     void deleteBLUser(long idReserv);
     BLUser updateBLUser(BLUser BLUser);
-    BLUser AddBLUserAndAssign(BLUser BLUser, long IdEvent);
-    public String reserver(Long IdEvent, BLUser BLUser);
+    BLUser AddBLUserAndAssign(BLUser BLUser, long IdBl);
+    public String reserver(Long IdBl, BLUser BLUser);
     /*public List<Object[]> getMonthlyBLUserCountsByYear(int year);*/
     public Map<String, Integer> statBLUserParEvenement();
 

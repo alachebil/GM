@@ -85,16 +85,16 @@
 
 		<!--		denpendency of twilio et sms -->
 
-<!--		<dependency>-->
-<!--			<groupId>com.twilio.sdk</groupId>-->
-<!--			<artifactId>twilio</artifactId>-->
-<!--			<version>7.16.1</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>com.google.zxing</groupId>-->
-<!--			<artifactId>core</artifactId>-->
-<!--			<version>3.5.1</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>7.16.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.5.1</version>
+		</dependency>
 
 	</dependencies>
 
