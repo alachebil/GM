@@ -10,10 +10,10 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -57,7 +57,7 @@ public class BLUserService implements IBLUserService {
 
 //// ************   Date   ******/*/-/-*/-/-/-/---*/
         // Obtenez la date actuelle
-        LocalDate dateActuelle = LocalDate.now();
+//        LocalDate dateActuelle = LocalDate.now();
 // Affectez la date actuelle à la réservation
 //        blUserser.setDate_reser(dateActuelle);
         return blUserRepository.save(blUserser);
@@ -87,11 +87,28 @@ public class BLUserService implements IBLUserService {
             for (BL evenement : evenements) {
                 // Assuming 'reservations' is properly populated in the Evenement entity
                 int reservationCount = evenement.getBLUsers() != null ? evenement.getBLUsers().size() : 0;
-                statResult.put(evenement.getRef_Bl(), reservationCount);
+                statResult.put(evenement.getRefBl(), reservationCount);
             }
 
             return statResult;
         }
+
+
+    @Override
+    // Find all BLUser entities where the associated Utilisateur's 'nom' matches the given name
+    public List<BL> getBLsForUserByNom(String nom) {
+        List<BLUser> blUsers = blUserRepository.findByUserNom(nom);
+
+        // Extract and return the corresponding unique BL entities
+        Set<BL> uniqueBLs = blUsers.stream()
+                .map(BLUser::getBl)  // Get associated BL from each BLUser
+                .collect(Collectors.toSet());  // Using Set to remove duplicates
+
+        // Convert the Set to a List to return it as a response
+        return uniqueBLs.stream().collect(Collectors.toList());
+    }
+
+
 
 }
 

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "event")
+//@ToString(exclude = "event")
 
 public class BLUser implements Serializable {
 
@@ -26,7 +26,6 @@ public class BLUser implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Utilisateur user;
-
 
 
 }

@@ -18,27 +18,25 @@ public class BL implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String Ref_Bl;
+    private String refBl;
     private String codeClient;
-
     private  String articleScan;
-
+    private LocalDate datechauffeur;
     private LocalDate dateDepot;
-
     private  LocalDate dateReceptionLiv;
-
     private boolean etatDepot;
-
     private boolean etatLivrer ;
 
     @OneToMany(mappedBy = "bl", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<BLUser> BLUsers;
 
-    @OneToOne
-    private Image imagecloud;
-
     @OneToMany(mappedBy = "bl", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Reclamation> reclamations;
+
+    @OneToOne
+    @JsonIgnore
+    private Livraison livraison;
+
 }

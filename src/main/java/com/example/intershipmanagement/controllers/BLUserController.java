@@ -45,9 +45,9 @@ public class BLUserController {
         return BLUserService.getAllBLUser();
     }
 
-    @GetMapping("/get/{idReserv}")
-    public BLUser getBLUserById(@PathVariable long idReserv) {
-        return BLUserService.getBLUserById(idReserv);
+    @GetMapping("/get/{idBlUser}")
+    public BLUser getBLUserById(@PathVariable long idBlUser) {
+        return BLUserService.getBLUserById(idBlUser);
     }
 
     // Order 4
@@ -62,22 +62,48 @@ public class BLUserController {
         return BLUserService.updateBLUser(BLUser);
     }
 
-    @PostMapping("/assign/{idBl}")
+    @PostMapping("/AddAssign/{idBl}")
     public BLUser addBLUserAndAssignBl(@RequestBody BLUser BLUser, @PathVariable("idBl") long idBl) {
         return BLUserService.AddBLUserAndAssign(BLUser, idBl);
     }
 
-///taffectii Bl el livreur sans ajout lel bl mara okhra  w baad nzidha tetbadel l etat ta3 depot depen ireclami wala ivaled w nziid date
-    @PostMapping("/AssignBlUser/{blId}/{idUser}")
-    public void AssignBlUser(@PathVariable long blId ,@PathVariable long idUser){
-        blService.AssignBlUser(blId,idUser);
+//////// Valider depot :affecter un bl existant pour responsable + etat positif + date depot
+@PostMapping("/ValiderDepot/{blId}/{idUser}")
+    public void ValiderDepot(@PathVariable long blId ,@PathVariable long idUser){
+        blService.ValiderDepot(blId,idUser);
     }
 
-    @PostMapping("/reserve/{idBl}")
-    public String reserver(@PathVariable Long idBl, @RequestBody BLUser BLUser) {
-
-        return BLUserService.reserver(idBl, BLUser);
+////// Valider depot :affecter un bl existant pour responsable + etat negatif + date depot
+@PostMapping("/reclamerDepot/{blId}/{idUser}")
+    public void reclamerDepot(@PathVariable long blId ,@PathVariable long idUser){
+        blService.reclamerDepot(blId,idUser);
     }
+
+////// Valider reception livreur :affecter un bl existant pour livreur + etat positif + date reception livreur
+    @PostMapping("/ValiderLivreur/{blId}/{idUser}")
+    public void ValiderLivreur(@PathVariable long blId ,@PathVariable long idUser){
+        blService.ValiderLivreur(blId,idUser);
+    }
+
+///// reclamer reclamer livreur :affecter un bl existant pour livreur + etat negatif (-) + date reception livreur
+    @PostMapping("/ReclamerLivreur/{blId}/{idUser}")
+    public void ReclamerLivreur(@PathVariable long blId ,@PathVariable long idUser){
+        blService.ReclamerLivreur(blId,idUser);
+    }
+
+
+////// Find all BLUser entities where the associated Utilisateur's 'nom' matches the given name
+    @GetMapping("/bls-for-user/{nom}")
+    public List<BL> getBLsForUser(@PathVariable String nom) {
+        // Call the service to get the BL list for the given user name
+        return BLUserService.getBLsForUserByNom(nom);
+    }
+
+//    @PostMapping("/BLUser/{idBl}")
+//    public String reserver(@PathVariable Long idBl, @RequestBody BLUser BLUser) {
+//
+//        return BLUserService.reserver(idBl, BLUser);
+//    }
 
     @GetMapping("/pdf")
     public void exportBlPdf(HttpServletResponse response) throws IOException, DocumentException {
@@ -138,7 +164,7 @@ public class BLUserController {
             // Group blusers by bl name
             Map<String, List<BLUser>> groupedBLUsers = new HashMap<>();
             for (BLUser BLUser : BLUsers) {
-                String Ref_Bl = BLUser.getBl() != null ? BLUser.getBl().getRef_Bl() : "Non spécifié";
+                String Ref_Bl = BLUser.getBl() != null ? BLUser.getBl().getRefBl() : "Non spécifié";
                 groupedBLUsers.computeIfAbsent(Ref_Bl, k -> new ArrayList<>()).add(BLUser);
             }
 
@@ -201,7 +227,7 @@ public class BLUserController {
     private String getFileAttributesString(BL Bl) {
         StringBuilder sb = new StringBuilder();
         sb.append("BL ID: ").append(Bl.getId()).append("\n");
-        sb.append("BL Nom: ").append(Bl.getRef_Bl()).append("\n");
+        sb.append("BL Nom: ").append(Bl.getRefBl()).append("\n");
         sb.append("BL Lieu: ").append(Bl.getArticleScan()).append("\n");
         sb.append("BL Type: ").append(Bl.getCodeClient()).append("\n");
         sb.append("BL début: ").append(Bl.isEtatDepot()).append("\n");

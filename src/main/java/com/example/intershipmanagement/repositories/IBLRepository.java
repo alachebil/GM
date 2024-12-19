@@ -12,6 +12,12 @@ import java.util.List;
 public interface IBLRepository extends JpaRepository<BL,Long> {
 
 
+    List<BL> findBLByRefBl(String Ref_Bl);
+    List<BL> findBLByCodeClient(String critere);
+    List<BL> findBLByRefBlOrCodeClient(String ref,String critere);
+
+    List<BL> findAllByOrderByDateDepotDesc();
+
 
 //    @Query("SELECT e FROM BL e " +
 //            "LEFT JOIN e.reservations r " +

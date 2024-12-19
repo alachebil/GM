@@ -8,6 +8,7 @@ import com.example.intershipmanagement.repositories.IBLRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -29,10 +30,11 @@ public class ReclamationService implements IReclamationService {
     }
 
     @Override
-    public Reclamation addreclamation(Reclamation a) {
+    public Reclamation addreclamation(Reclamation r) {
 
-
-        return reclamationRepo.save(a);
+        LocalDate dateActuelle = LocalDate.now();
+        r.setDateReclamation(dateActuelle);
+        return reclamationRepo.save(r);
     }
 
     @Override
@@ -49,8 +51,19 @@ public class ReclamationService implements IReclamationService {
     public Reclamation reclamationAndAssign(Reclamation reclamation, long IdBl) {
         BL BL = blRepository.findById(IdBl).get();
         reclamation.setBl(BL);
+        LocalDate dateActuelle = LocalDate.now();
+        reclamation.setDateReclamation(dateActuelle);
         return reclamationRepo.save(reclamation);
     }
+
+
+
+/// afficher les reclamations d'un bl donné
+    @Override
+    public List<Reclamation> retrieveReclamationByBl(Long BlId) {
+        return reclamationRepo.findByBlId(BlId);
+    }
+
 
     @Override
     public Map<String, Integer> statreclamationParBl() {
@@ -60,7 +73,7 @@ public class ReclamationService implements IReclamationService {
         for (BL bl : Bls) {
             // Assuming 'reservations' is properly populated in the Evenement entity
             int reclamationCount = bl.getReclamations() != null ? bl.getReclamations().size() : 0;
-            statResult.put(bl.getRef_Bl(), reclamationCount);
+            statResult.put(bl.getRefBl(), reclamationCount);
         }
 
         return statResult;

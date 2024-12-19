@@ -1,8 +1,11 @@
 package com.example.intershipmanagement.entities;
 
 
+        import com.fasterxml.jackson.annotation.JsonIgnore;
         import jakarta.persistence.*;
         import lombok.*;
+
+        import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -25,11 +28,14 @@ public class Reclamation {
 
     private  Long Nbr ;
 
+    private LocalDate DateReclamation;
+
     private String ImageJustificatif;
 
 //    private  String BL_ID ;
 
     @ManyToOne
+    @JsonIgnore
     private BL bl;
 
 }

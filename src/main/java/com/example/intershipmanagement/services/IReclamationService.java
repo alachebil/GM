@@ -11,8 +11,8 @@ public interface IReclamationService {
     public Reclamation addreclamation (Reclamation a);
     public void removereclamation (Long reclamation);
     public Reclamation modifyreclamation (Reclamation reclamation);
-    Reclamation reclamationAndAssign(Reclamation reclamation, long IdBl);
-
+    public Reclamation reclamationAndAssign(Reclamation reclamation, long IdBl);
+    public List<Reclamation> retrieveReclamationByBl(Long BlId);
     public Map<String, Integer> statreclamationParBl();
 
 

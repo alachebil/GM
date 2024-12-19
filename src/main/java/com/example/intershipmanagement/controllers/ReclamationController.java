@@ -26,12 +26,12 @@ public class ReclamationController {
         List<Reclamation> listreclamationses = reclamationService.retrieveAllreclamation();
         return listreclamationses;
     }
+
     @GetMapping("/retrieve-reclamation/{idreclamation}")
     public Reclamation retrievereclamation(@PathVariable("idreclamation") Long reclamationId) {
         Reclamation reclamation = reclamationService.retrievereclamation(reclamationId);
         return reclamation;
     }
-
 
     @PostMapping("/add-reclamation")
     public Reclamation addreclamation(@RequestBody Reclamation e) {
@@ -39,9 +39,9 @@ public class ReclamationController {
         return reclamation;
     }
 
-    @PostMapping("/assign/{idEvent}")
-    public Reclamation reclamationAndAssign(@RequestBody Reclamation reclamation, @PathVariable("idEvent") long idEvent) {
-        return reclamationService.reclamationAndAssign(reclamation, idEvent);
+    @PostMapping("/assign/{idBl}")
+    public Reclamation reclamationAndAssign(@RequestBody Reclamation reclamation, @PathVariable("idBl") long idBl) {
+        return reclamationService.reclamationAndAssign(reclamation, idBl);
     }
 
     @DeleteMapping("/remove-reclamation/{reclamation-id}")
@@ -56,6 +56,12 @@ public class ReclamationController {
 
     }
 
+//////      afficher les reclamations de bl donné par id
+    @GetMapping("/retrieve-Reclamation-by-Bl/{idBl}")
+    public List<Reclamation> retrieveReclamationByidBl(@PathVariable("idBl") Long idBl) {
+        List<Reclamation> avis = reclamationService.retrieveReclamationByBl(idBl);
+        return avis;
+    }
 
     @GetMapping("/statEventparreclamation")
     public Map<String, Integer> statReservationParEvenement(){
@@ -63,10 +69,7 @@ public class ReclamationController {
     }
 
 
-
-
-
-    @PostMapping("/analyse-reclamation/{reclamation-id}")
+     @PostMapping("/analyse-reclamation/{reclamation-id}")
     public ResponseEntity<String> analysereclamation(@PathVariable("reclamation-id") Long reclamationId){
         Reclamation reclamation = reclamationRepo.findById(reclamationId).get();
         if (reclamation == null || reclamation.getDescription() == null || reclamation.getDescription().isEmpty()) {

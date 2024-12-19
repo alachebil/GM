@@ -1,5 +1,6 @@
 package com.example.intershipmanagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,7 +8,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Getter
 @Setter
 @Data
 @AllArgsConstructor
@@ -19,13 +19,14 @@ public class Livraison implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 
-    private LocalDate Date_LivraisonClient ;
+    private LocalDate dateLivraisonClient;
 
-    private boolean Etat_Livraison ;
+    private Boolean etatLivraison;
 
     private String confirmation;
 
-    @OneToOne
+    @OneToOne(mappedBy = "livraison")
+    @JsonIgnore
     private BL bl;
 
 }
