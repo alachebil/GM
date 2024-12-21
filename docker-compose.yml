@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  database:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ala
+      POSTGRES_DB: testGM
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  eventapp:
+    image: alachebil/imagetest
+    container_name: eventapp_container
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/testGM?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ala
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SERVER_SERVLET_CONTEXT_PATH: /GM
+      SERVER_PORT: 8085
+    ports:
+      - "8085:8085"
+
+volumes:
+  postgres_data:
