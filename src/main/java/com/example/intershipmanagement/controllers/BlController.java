@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -169,7 +171,6 @@ public class BlController {
         return blService.findBLByRefBlOrCodeClient(ref,code);
     }
 
-
     @GetMapping("/rechercherRef/{ref}")
     public List<BL> findBLByRef_Bl(@PathVariable("ref") String ref){
         return blService.findBLByRef_Bl(ref);
@@ -186,6 +187,47 @@ public class BlController {
 
         return blService.getBLsSortedByDateDepotAsc();
     }
+
+    ////// trouver le ClientVip
+    @GetMapping("/ClientVip")
+    public String findMostFrequentClient(){
+
+        return blService.findMostFrequentClient();
+    }
+
+    // Trouver l'article le plus fréquent dans tout les bls
+    @GetMapping("/MostArticles")
+    public String getMostFrequentArticle(){
+
+        return blService.getMostFrequentArticle();
+    }
+
+////les articles pour client donné trie par le plus demandé
+    @GetMapping("/articles-for-client/{codeClient}")
+    public Map<String, Integer> getArticlesForClient(@PathVariable("codeClient") String codeClient) {
+        return blService.getArticlesForClient(codeClient);
+    }
+    //////// historique des article et ses poid pour  tout les clients
+
+    @GetMapping("/weekly-by-clients")
+    public Map<String, Map<Integer, Map<String, Double>>> getWeeklyEstimationByClient() {
+        return blService.getWeeklyEstimationByClient();
+    }
+
+
+    //////// historique des article et ses poid pour un client spécifique
+    @GetMapping("/weekly-by-clientDonne/{codeClient}")
+    public Map<Integer, Map<String, Double>> getWeeklyEstimationForClient(@PathVariable("codeClient") String codeClient) {
+        return blService.getWeeklyEstimationForClient(codeClient);
+    }
+
+    //Estimation pour nextweek
+    @GetMapping("/estimate/{clientCode}")
+    public Map<String, Double> getEstimationForNextWeek(@PathVariable String clientCode) {
+        // Call the service to get the estimation for the next week for the given client code
+        return blService.getEstimationForNextWeek(clientCode);
+    }
+
 
     // Order 4
     @DeleteMapping("/delete/{idBl}")

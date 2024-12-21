@@ -6,6 +6,7 @@ import com.google.zxing.NotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface IBLService {
     BL addBl(BL bl);
@@ -26,8 +27,19 @@ public interface IBLService {
     public void  reclamerDepot(Long BlId, Long userId);
     public void  ReclamerLivreur(Long BlId, Long userId);
     public void  ValiderLivreur(Long BlId, Long userId);
+    public String findMostFrequentClient();
+    public String getMostFrequentArticle();
+    public Map<String, Integer> getArticlesForClient(String codeClient);
 
+    //  historique les articles et ses poid pour tout les clients
+    public Map<String, Map<Integer, Map<String, Double>>> getWeeklyEstimationByClient() ;
+
+  //  historique les articles et ses poid pour un client spécifique
+    public Map<Integer, Map<String, Double>> getWeeklyEstimationForClient(String clientCode);
+
+//Estimation pour nextweek
+    public Map<String, Double> getEstimationForNextWeek(String clientCode);
     public List<BL> getBLsSortedByDateDepotAsc();
-//    public List<BL> getEventsByUserOrderByParticipation(Long userId);
+
 
 }
