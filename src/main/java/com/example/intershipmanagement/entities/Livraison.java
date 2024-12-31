@@ -23,7 +23,7 @@ public class Livraison implements Serializable {
 
     private Boolean etatLivraison;
 
-    private String confirmation;
+    private String confirmationImage;
 
     @OneToOne(mappedBy = "livraison")
     @JsonIgnore

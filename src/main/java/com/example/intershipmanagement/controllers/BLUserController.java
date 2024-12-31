@@ -36,6 +36,8 @@ public class BLUserController {
     private QRCodeGenerator qrCodeGenerator;
 
     @PostMapping("/add")
+
+
     public BLUser addBlUser(@RequestBody BLUser blUser) {
         return BLUserService.addBLUser(blUser);
     }

@@ -31,8 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("api/bl")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-
-
 public class BlController {
     BlService blService;
     private QRCodeGenerator qrCodeGenerator;

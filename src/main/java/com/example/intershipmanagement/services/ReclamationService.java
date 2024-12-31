@@ -31,9 +31,6 @@ public class ReclamationService implements IReclamationService {
 
     @Override
     public Reclamation addreclamation(Reclamation r) {
-
-        LocalDate dateActuelle = LocalDate.now();
-        r.setDateReclamation(dateActuelle);
         return reclamationRepo.save(r);
     }
 
